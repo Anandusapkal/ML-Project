@@ -22,7 +22,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 model = joblib.load('model.pkl')
 
 # Streamlit app title
-st.image("header_image.png", use_column_width=True)  # Add your path to a header image
+st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmachine-learning-background&psig=AOvVaw1gTJ-2Mj0rv7auuOQfF6i9&ust=1732336797377000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKiWw86P74kDFQAAAAAdAAAAABAE", use_column_width=True)  # Add your path to a header image
 st.title("Brain Stroke Prediction App")
 
 # Decorative header
