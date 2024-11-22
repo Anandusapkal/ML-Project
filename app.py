@@ -127,7 +127,7 @@ if st.button('Predict'):
     prediction = model.predict(user_input)
 
     # Display the prediction result in a styled box
-    if prediction == 1:
+    if prediction[0] == 1:
         st.markdown(f"<div class='result-box high-risk'>Prediction: High Risk of Stroke!</div>", unsafe_allow_html=True)
     else:
         st.markdown(f"<div class='result-box low-risk'>Prediction: Low Risk of Stroke!</div>", unsafe_allow_html=True)
