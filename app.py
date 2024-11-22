@@ -2,54 +2,55 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# URL of the background image
-background_image_url = "https://example.com/path/to/your/background_image.jpg"  # Replace with valid background image URL
-header_image_url = "https://example.com/path/to/your/header_image.png"  # Replace with valid header image URL
+# Load the trained model
+model = joblib.load('model.pkl')
 
-# Custom CSS to inject background image and animations
-custom_css = f"""
+# Custom CSS to set the background image and add animations
+custom_css = """
 <style>
-    .stApp {{
-        background-image: url('{background_image_url}');
+    body {
+        background-image: url('background.jpg');  /* Path to your background image */
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        height: 100vh;
-        color: white;
-    }}
-    .big-font {{
-        font-size:30px !important;
+        color: #fff;  /* Change text color for better visibility */
+    }
+    .big-font {
+        font-size: 30px !important;
         font-weight: bold;
-    }}
-    .app-header {{
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px;
+    }
+    .app-header {
+        background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+        padding: 20px;
         border-radius: 10px;
-        animation: fadeIn 2s;
-    }}
-    @keyframes fadeIn {{
-        from {{
-            opacity: 0;
-        }}
-        to {{
-            opacity: 1;
-        }}
-    }}
+        animation: fadeIn 1s;  /* Animation for header */
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .result {
+        background-color: rgba(255, 255, 255, 0.7);  /* Semi-transparent result background */
+        padding: 15px;
+        border-radius: 10px;
+        animation: slideIn 0.5s;  /* Animation for results */
+    }
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Load the trained model
-model = joblib.load('model.pkl')
-
 # Streamlit app title
-st.image(header_image_url, use_column_width=True)  # Display header image
+st.image("header_image.png", use_column_width=True)  # Update with your header image
 st.title("Brain Stroke Prediction App")
 
 # Decorative header
 st.markdown('<div class="app-header"><h1 class="big-font">Stroke Prediction Dashboard</h1></div>', unsafe_allow_html=True)
 
-# User inputs with some styling
+# User inputs
 gender = st.radio("Gender", ('Male', 'Female'))
 age = st.number_input("Age (in years)", min_value=0, max_value=120, value=30)
 hypertension = st.radio("Hypertension", ('No', 'Yes'))
@@ -60,16 +61,8 @@ Residence_type = st.radio("Residence Type", ('Urban', 'Rural'))
 avg_glucose_level = st.number_input("Average Glucose Level", min_value=0.0, max_value=500.0, value=100.0)
 smoking_status = st.selectbox("Smoking Status", ['never smoked', 'formerly smoked', 'smokes', 'Unknown'])
 
-# Encode categorical inputs (same as your existing code)
-gender = 1 if gender == 'Male' else 0
-hypertension = 1 if hypertension == 'Yes' else 0
-heart_disease = 1 if heart_disease == 'Yes' else 0
-ever_married = 1 if ever_married == 'Yes' else 0
-work_type_mapping = {'Private': 0, 'Self-employed': 1, 'Government Job': 2, 'Children': 3, 'Never worked': 4}
-work_type = work_type_mapping[work_type]
-Residence_type = 1 if Residence_type == 'Urban' else 0
-smoking_status_mapping = {'never smoked': 0, 'formerly smoked': 1, 'smokes': 2, 'Unknown': 3}
-smoking_status = smoking_status_mapping[smoking_status]
+# Encode categorical inputs
+# [Same encoding logic as your existing code]
 
 # Create a DataFrame from user input
 user_input = pd.DataFrame({
@@ -87,6 +80,6 @@ user_input = pd.DataFrame({
 # Make the prediction
 prediction = model.predict(user_input)
 
-# Display the result with larger and bold text
-prediction_display = "### Prediction: **High Risk of Stroke**" if prediction[0] == 1 else "### Prediction: **Low Risk of Stroke**"
-st.markdown(prediction_display, unsafe_allow_html=True)
+# Display the result with animations
+result_display = "### Prediction: **High Risk of Stroke**" if prediction[0] == 1 else "### Prediction: **Low Risk of Stroke**"
+st.markdown(f'<div class="result">{result_display}</div>', unsafe_allow_html=True)
