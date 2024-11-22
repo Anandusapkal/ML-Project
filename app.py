@@ -9,10 +9,11 @@ model = joblib.load('model.pkl')
 custom_css = """
 <style>
     body {
-        background-image: url('https://storage.googleapis.com/kaggle-datasets-images/2074409/3454076/c3b307a6fd9ed5528d06ca0fc7f6e7da/dataset-preview.png?AWSAccessKeyId=ASIA5XAN2NTSO7P6ZTXM42EDW3NL2XT4APDP7W5VWZBGYS7DU&Expires=1732564600&Signature=UqWhMOqgEXMhH6ryUqPtiQ5DhL9zAYmd2e~mrO5H~CwHpFXmOlJZjBYN~hFzMktvwJc1BqUjGhvblPzpc7mtnbFnRdy3smBft7~Mk2WRzqtZZqj0n~r0c47lm6a3rMKeqH1xdWnsPT4U4gl9VQY1hQKCM3vdnK1tfo~a5a6nK9uW6DJtI9MlI~F~kO1lnycpADg2Hg77PpM9J7ktt70lUwlH06uTA2dX4Wkfmjhzjf-6qb5to8Wfd2b8Xz-8iH1lgMyuy65gA==' );
+        background-image: url('background.jpg');  /* Ensure this path matches your image path */
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
+        margin: 0;
         color: #fff;  /* Change text color for better visibility */
     }
     .big-font {
