@@ -2,18 +2,38 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# Custom CSS to inject
-custom_css = """
+# URL of the background image
+background_image_url = "https://www.shutterstock.com/search/machine-learning-background"
+
+# Custom CSS to inject background image and animations
+custom_css = f"""
 <style>
-    .big-font {
+    .stApp {{
+        background-image: url('{background_image_url}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        color: white;
+    }}
+    .big-font {{
         font-size:30px !important;
         font-weight: bold;
-    }
-    .app-header {
-        background-color: #f0f2f6;
+    }}
+    .app-header {{
+        background-color: rgba(0, 0, 0, 0.7);
         padding: 10px;
         border-radius: 10px;
-    }
+        animation: fadeIn 2s;
+    }}
+    @keyframes fadeIn {{
+        from {{
+            opacity: 0;
+        }}
+        to {{
+            opacity: 1;
+        }}
+    }}
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
@@ -22,7 +42,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 model = joblib.load('model.pkl')
 
 # Streamlit app title
-st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmachine-learning-background&psig=AOvVaw1gTJ-2Mj0rv7auuOQfF6i9&ust=1732336797377000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKiWw86P74kDFQAAAAAdAAAAABAE", use_column_width=True)  # Add your path to a header image
+st.image("header_image.png", use_column_width=True)  # Add your path to a header image
 st.title("Brain Stroke Prediction App")
 
 # Decorative header
@@ -39,8 +59,32 @@ Residence_type = st.radio("Residence Type", ('Urban', 'Rural'))
 avg_glucose_level = st.number_input("Average Glucose Level", min_value=0.0, max_value=500.0, value=100.0)
 smoking_status = st.selectbox("Smoking Status", ['never smoked', 'formerly smoked', 'smokes', 'Unknown'])
 
-# Data processing and prediction
-# [Same as your existing code]
+# Encode categorical inputs (same as your existing code)
+gender = 1 if gender == 'Male' else 0
+hypertension = 1 if hypertension == 'Yes' else 0
+heart_disease = 1 if heart_disease == 'Yes' else 0
+ever_married = 1 if ever_married == 'Yes' else 0
+work_type_mapping = {'Private': 0, 'Self-employed': 1, 'Government Job': 2, 'Children': 3, 'Never worked': 4}
+work_type = work_type_mapping[work_type]
+Residence_type = 1 if Residence_type == 'Urban' else 0
+smoking_status_mapping = {'never smoked': 0, 'formerly smoked': 1, 'smokes': 2, 'Unknown': 3}
+smoking_status = smoking_status_mapping[smoking_status]
+
+# Create a DataFrame from user input
+user_input = pd.DataFrame({
+    'gender': [gender],
+    'age': [age],
+    'hypertension': [hypertension],
+    'heart_disease': [heart_disease],
+    'ever_married': [ever_married],
+    'work_type': [work_type],
+    'Residence_type': [Residence_type],
+    'avg_glucose_level': [avg_glucose_level],
+    'smoking_status': [smoking_status]
+})
+
+# Make the prediction
+prediction = model.predict(user_input)
 
 # Display the result with larger and bold text
 prediction_display = "### Prediction: **High Risk of Stroke**" if prediction[0] == 1 else "### Prediction: **Low Risk of Stroke**"
