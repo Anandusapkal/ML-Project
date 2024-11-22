@@ -44,7 +44,7 @@ custom_css = """
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Streamlit app title
-st.image("header_image.png", use_column_width=True)  # Update with your header image
+st.image("ML img2.png", use_column_width=True)  # Update with your header image
 st.title("Brain Stroke Prediction App")
 
 # Decorative header
