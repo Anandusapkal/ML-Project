@@ -1,4 +1,3 @@
-# Streamlit app for Brain Stroke Prediction
 import streamlit as st
 import pandas as pd
 import joblib
@@ -6,8 +5,23 @@ import joblib
 # Load the trained model
 model = joblib.load('model.pkl')
 
-# Streamlit app title
-st.title("Brain Stroke Prediction App")
+# Streamlit app title with emoji and CSS for animation
+st.markdown("<h1 style='text-align: center; color: purple; animation: fadeIn 3s;'>🧠 Brain Stroke Prediction App 🩺</h1>", unsafe_allow_html=True)
+
+# Custom CSS for animation
+st.markdown("""
+    <style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .stButton>button {
+        color: white;
+        background: purple;
+        animation: fadeIn 2s;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # User inputs
 gender = st.radio("Gender", ('Male', 'Female'))
@@ -47,8 +61,8 @@ user_input = pd.DataFrame({
 # Make the prediction
 prediction = model.predict(user_input)
 
-# Display the result
+# Display the result with emoji
 if prediction[0] == 1:
-    st.write("### Prediction: **High Risk of Stroke**")
+    st.write("### Prediction: **High Risk of Stroke** 🚨")
 else:
-    st.write("### Prediction: **Low Risk of Stroke**")
+    st.write("### Prediction: **Low Risk of Stroke** ✅")
