@@ -3,8 +3,9 @@ import pandas as pd
 import joblib
 
 # URL of the background image
-background_image_url = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmachine-learning-background&psig=AOvVaw1gTJ-2Mj0rv7auuOQfF6i9&ust=1732336797377000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKiWw86P74kDFQAAAAAdAAAAABAE"
-header_image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fheader-3d%3Fimage_type%3Dphoto%26page%3D5&psig=AOvVaw1gTJ-2Mj0rv7auuOQfF6i9&ust=1732336797377000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKiWw86P74kDFQAAAAAdAAAAABAJ"
+background_image_url = "https://example.com/path/to/your/background_image.jpg"  # Replace with valid background image URL
+header_image_url = "https://example.com/path/to/your/header_image.png"  # Replace with valid header image URL
+
 # Custom CSS to inject background image and animations
 custom_css = f"""
 <style>
@@ -42,7 +43,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 model = joblib.load('model.pkl')
 
 # Streamlit app title
-st.image("header_image", use_column_width=True)  # Add your path to a header image
+st.image(header_image_url, use_column_width=True)  # Display header image
 st.title("Brain Stroke Prediction App")
 
 # Decorative header
