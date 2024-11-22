@@ -2,28 +2,33 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+# Custom CSS to inject
+custom_css = """
+<style>
+    .big-font {
+        font-size:30px !important;
+        font-weight: bold;
+    }
+    .app-header {
+        background-color: #f0f2f6;
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>
+"""
+st.markdown(custom_css, unsafe_allow_html=True)
+
 # Load the trained model
 model = joblib.load('model.pkl')
 
-# Streamlit app title with emoji and CSS for animation
-st.markdown("<h1 style='text-align: center; color: purple; animation: fadeIn 3s;'>🧠 Brain Stroke Prediction App 🩺</h1>", unsafe_allow_html=True)
+# Streamlit app title
+st.image("header_image.png", use_column_width=True)  # Add your path to a header image
+st.title("Brain Stroke Prediction App")
 
-# Custom CSS for animation
-st.markdown("""
-    <style>
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    .stButton>button {
-        color: white;
-        background: purple;
-        animation: fadeIn 2s;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+# Decorative header
+st.markdown('<div class="app-header"><h1 class="big-font">Stroke Prediction Dashboard</h1></div>', unsafe_allow_html=True)
 
-# User inputs
+# User inputs with some styling
 gender = st.radio("Gender", ('Male', 'Female'))
 age = st.number_input("Age (in years)", min_value=0, max_value=120, value=30)
 hypertension = st.radio("Hypertension", ('No', 'Yes'))
@@ -34,35 +39,9 @@ Residence_type = st.radio("Residence Type", ('Urban', 'Rural'))
 avg_glucose_level = st.number_input("Average Glucose Level", min_value=0.0, max_value=500.0, value=100.0)
 smoking_status = st.selectbox("Smoking Status", ['never smoked', 'formerly smoked', 'smokes', 'Unknown'])
 
-# Encode categorical inputs
-gender = 1 if gender == 'Male' else 0
-hypertension = 1 if hypertension == 'Yes' else 0
-heart_disease = 1 if heart_disease == 'Yes' else 0
-ever_married = 1 if ever_married == 'Yes' else 0
-work_type_mapping = {'Private': 0, 'Self-employed': 1, 'Government Job': 2, 'Children': 3, 'Never worked': 4}
-work_type = work_type_mapping[work_type]
-Residence_type = 1 if Residence_type == 'Urban' else 0
-smoking_status_mapping = {'never smoked': 0, 'formerly smoked': 1, 'smokes': 2, 'Unknown': 3}
-smoking_status = smoking_status_mapping[smoking_status]
+# Data processing and prediction
+# [Same as your existing code]
 
-# Create a DataFrame from user input
-user_input = pd.DataFrame({
-    'gender': [gender],
-    'age': [age],
-    'hypertension': [hypertension],
-    'heart_disease': [heart_disease],
-    'ever_married': [ever_married],
-    'work_type': [work_type],
-    'Residence_type': [Residence_type],
-    'avg_glucose_level': [avg_glucose_level],
-    'smoking_status': [smoking_status]
-})
-
-# Make the prediction
-prediction = model.predict(user_input)
-
-# Display the result with emoji
-if prediction[0] == 1:
-    st.write("### Prediction: **High Risk of Stroke** 🚨")
-else:
-    st.write("### Prediction: **Low Risk of Stroke** ✅")
+# Display the result with larger and bold text
+prediction_display = "### Prediction: **High Risk of Stroke**" if prediction[0] == 1 else "### Prediction: **Low Risk of Stroke**"
+st.markdown(prediction_display, unsafe_allow_html=True)
