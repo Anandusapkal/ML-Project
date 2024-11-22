@@ -9,7 +9,7 @@ model = joblib.load('model.pkl')
 custom_css = """
 <style>
     body {
-        background-image: url('background.jpg');  /* Path to your background image */
+        background-image: url('ML img.jpg');  /* Path to your background image */
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
