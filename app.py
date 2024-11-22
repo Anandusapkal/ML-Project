@@ -61,10 +61,24 @@ Residence_type = st.radio("Residence Type", ('Urban', 'Rural'))
 avg_glucose_level = st.number_input("Average Glucose Level", min_value=0.0, max_value=500.0, value=100.0)
 smoking_status = st.selectbox("Smoking Status", ['never smoked', 'formerly smoked', 'smokes', 'Unknown'])
 
-# Encode categorical inputs
-# [Same encoding logic as your existing code]
+# Encode categorical inputs into numeric values
+gender = 1 if gender == 'Male' else 0
+hypertension = 1 if hypertension == 'Yes' else 0
+heart_disease = 1 if heart_disease == 'Yes' else 0
+ever_married = 1 if ever_married == 'Yes' else 0
 
-# Create a DataFrame from user input
+# Encoding work_type (mapping categories to numbers)
+work_type_mapping = {'Private': 0, 'Self-employed': 1, 'Government Job': 2, 'Children': 3, 'Never worked': 4}
+work_type = work_type_mapping[work_type]
+
+# Encoding Residence_type (Urban: 1, Rural: 0)
+Residence_type = 1 if Residence_type == 'Urban' else 0
+
+# Encoding smoking_status (mapping categories to numbers)
+smoking_status_mapping = {'never smoked': 0, 'formerly smoked': 1, 'smokes': 2, 'Unknown': 3}
+smoking_status = smoking_status_mapping[smoking_status]
+
+# Create a DataFrame from user input with proper encoding
 user_input = pd.DataFrame({
     'gender': [gender],
     'age': [age],
